@@ -1,6 +1,7 @@
 SHELL:=/opt/local/bin/bash
 JIRA_TICKET:=TTGE-4966
-TIMESTAMP:=$(shell /bin/date "+_%Y_%m_%d.svg")
+SLACK_CHANNEL:=#ios-tech-debt-2020
+TIMESTAMP:=$(shell /bin/date "+_%Y_%m_%d_%H%M%S%Z.svg")
 TITLE:=${JIRA_TICKET}$(shell /bin/date "+ %Y-%m-%d %H:%M:%S")
 
 run:
@@ -18,10 +19,11 @@ ${JIRA_TICKET} \
 | dot -Tsvg -Nfontname=Helvetica -Nfontsize=10 -Efontname=Helvetica -Efontsize=7 -Gfontname=Helvetica -Gfontsize=12 \
 > ${JIRA_TICKET}${TIMESTAMP}
 
-
 view: ${JIRA_TICKET}${TIMESTAMP}
 	open ${JIRA_TICKET}${TIMESTAMP}
 
 upload: run
-	python3 uploadjiradeps2slack.py ${JIRA_TICKET}${TIMESTAMP}
+	python3 uploadjiradeps2slack.py ${JIRA_TICKET}${TIMESTAMP} "${SLACK_CHANNEL}"
  
+clean:
+	rm *.svg

@@ -8,7 +8,7 @@ from slack.errors import SlackApiError
 client = WebClient(token=os.environ['SLACK_API_TOKEN'])
 
 message = 'iOS Tech Debt 2020 Dependencies Update. Please download SVG file to link to JIRA tickets.'
-channel = '@charles'
+channel = sys.argv[2]
 
 try:
     response = client.chat_postMessage(
