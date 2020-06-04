@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 import sys
 from slack import WebClient
@@ -6,10 +8,11 @@ from slack.errors import SlackApiError
 client = WebClient(token=os.environ['SLACK_API_TOKEN'])
 
 message = 'iOS Tech Debt 2020 Dependencies Update. Please download SVG file to link to JIRA tickets.'
+channel = '@charles'
 
 try:
     response = client.chat_postMessage(
-        channel='#ios-tech-debt-2020',
+        channel=channel,
         text=message)
     assert response["message"]["text"] == message
 except SlackApiError as e:
@@ -21,7 +24,7 @@ except SlackApiError as e:
 try:
     filepath="./{}".format(sys.argv[1])
     response = client.files_upload(
-        channels='#ios-tech-debt-2020',
+        channels=channel,
         file=filepath)
     assert response["file"]  # the uploaded file
 except SlackApiError as e:
