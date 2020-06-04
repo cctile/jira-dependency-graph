@@ -1,10 +1,11 @@
 import os
+import sys
 from slack import WebClient
 from slack.errors import SlackApiError
 
 client = WebClient(token=os.environ['SLACK_API_TOKEN'])
 
-message = 'iOS Tech Debt 2020 Dependencies as of 2020-06-04'
+message = 'iOS Tech Debt 2020 Dependencies Update. Please download SVG file to link to JIRA tickets.'
 
 try:
     response = client.chat_postMessage(
@@ -18,7 +19,7 @@ except SlackApiError as e:
     print(f"Got an error: {e.response['error']}")
 
 try:
-    filepath="./TTGE-4966_2020_06_04.svg"
+    filepath="./{}".format(sys.argv[1])
     response = client.files_upload(
         channels='#ios-tech-debt-2020',
         file=filepath)

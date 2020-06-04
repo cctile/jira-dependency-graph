@@ -19,5 +19,9 @@ ${JIRA_TICKET} \
 > ${JIRA_TICKET}${TIMESTAMP}
 
 
-view:
+view: ${JIRA_TICKET}${TIMESTAMP}
 	open ${JIRA_TICKET}${TIMESTAMP}
+
+upload: run
+	python3 uploadjiradeps2slack.py ${JIRA_TICKET}${TIMESTAMP}
+ 
