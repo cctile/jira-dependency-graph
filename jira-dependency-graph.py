@@ -69,10 +69,14 @@ def build_graph_data(start_issue_key, jira, excludes, show_directions, direction
 
     def get_status_color(status_field):
         status = status_field['statusCategory']['name'].upper()
+        #sys.stderr.write("{}\n".format(status))
         if status == 'IN PROGRESS':
             return 'yellow'
         elif status == 'DONE':
             return 'green'
+        elif status == 'TO DO':
+            return 'red'
+
         return 'white'
 
     def create_node_text(issue_key, fields, islink=True):
@@ -92,8 +96,8 @@ def build_graph_data(start_issue_key, jira, excludes, show_directions, direction
         # log('node ' + issue_key + ' status = ' + str(status))
 
         if islink:
-            return '"{}\\n({})"'.format(issue_key, summary)
-        return '"{}\\n({})" [href="{}", fillcolor="{}", style=filled]'.format(issue_key, summary, jira.get_issue_uri(issue_key), get_status_color(status))
+            return '"{}\\n{}"'.format(summary, issue_key)
+        return '"{}\\n{}" [href="{}", fillcolor="{}", style=filled]'.format(summary, issue_key, jira.get_issue_uri(issue_key), get_status_color(status))
 
     def process_link(fields, issue_key, link):
         if 'outwardIssue' in link:
