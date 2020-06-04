@@ -1,6 +1,6 @@
 SHELL:=/opt/local/bin/bash
 JIRA_TICKET:=TTGE-4966
-SLACK_CHANNEL:=#ios-tech-debt-2020
+SLACK_CHANNEL:=\#ios-tech-debt-2020
 TIMESTAMP:=$(shell /bin/date "+_%Y_%m_%d_%H%M%S%Z.svg")
 TITLE:=${JIRA_TICKET}$(shell /bin/date "+ %Y-%m-%d %H:%M:%S")
 
@@ -19,7 +19,7 @@ ${JIRA_TICKET} \
 | dot -Tsvg -Nfontname=Helvetica -Nfontsize=10 -Efontname=Helvetica -Efontsize=7 -Gfontname=Helvetica -Gfontsize=12 \
 > ${JIRA_TICKET}${TIMESTAMP}
 
-view: ${JIRA_TICKET}${TIMESTAMP}
+view: run
 	open ${JIRA_TICKET}${TIMESTAMP}
 
 upload: run

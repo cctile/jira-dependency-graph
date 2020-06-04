@@ -144,10 +144,14 @@ def build_graph_data(start_issue_key, jira, excludes, show_directions, direction
             node = None
         else:
             # log("Linked issue summary " + linked_issue['fields']['summary'])
+            linkLabel = link_type
+            if link_type == 'is blocked by':
+                linkLabel = 'blocks'
             node = '{}->{}[label="{}"{}]'.format(
                 create_node_text(issue_key, fields),
-                create_node_text(linked_issue_key, linked_issue['fields']),
-                link_type, extra)
+                create_node_text(linked_issue_key,
+                                 linked_issue['fields']),
+                linkLabel, extra)
 
         return linked_issue_key, node
 
