@@ -11,8 +11,10 @@ run:
 --user=${JIRA_USER} \
 --password=${JIRA_PASS} \
 --jira=${JIRA_URL} \
+--word-wrap \
 -d inward \
 -l \
 ${JIRA_TICKET} \
 | sed -e '3i\'$$'\n''edge [dir="back"];' \
-| dot -Tsvg > ${JIRA_TICKET}${TIMESTAMP}
+| dot -Tsvg -Nfontname=Helvetica -Nfontsize=10 -Efontname=Helvetica -Efontsize=7 \
+> ${JIRA_TICKET}${TIMESTAMP}
