@@ -68,16 +68,23 @@ def build_graph_data(start_issue_key, jira, excludes, show_directions, direction
         return issue['key']
 
     def get_status_color(status_field):
-        status = status_field['statusCategory']['name'].upper()
-        if status == 'IN PROGRESS':
+        status = status_field['name'].upper()
+        #sys.stderr.write("{}\n".format(status))
+        if status in ('IN PROGRESS', 'IN DEVELOPMENT', 'CODE REVIEW'):
             return 'yellow'
+        elif status in ('WAITING FOR QA', 'IN QA REVIEW', 'BLOCKED'):
+            return 'cyan'
         elif status == 'DONE':
             return 'green'
+        elif status in ('OPEN', 'TODO', 'BACKLOG', 'ICEBOX'):
+            return 'red'
+
         return 'white'
 
     def create_node_text(issue_key, fields, islink=True):
         summary = fields['summary']
         status = fields['status']
+        #sys.stderr.write("{}".format(fields))
 
         if word_wrap == True:
             if len(summary) > MAX_SUMMARY_LENGTH:
@@ -92,8 +99,8 @@ def build_graph_data(start_issue_key, jira, excludes, show_directions, direction
         # log('node ' + issue_key + ' status = ' + str(status))
 
         if islink:
-            return '"{}\\n({})"'.format(issue_key, summary)
-        return '"{}\\n({})" [href="{}", fillcolor="{}", style=filled]'.format(issue_key, summary, jira.get_issue_uri(issue_key), get_status_color(status))
+            return '"{}\\n{}\\n{}"'.format(summary, issue_key, status['name'])
+        return '"{}\\n{}\\n{}" [href="{}", fillcolor="{}", style=filled]'.format(summary, issue_key, status['name'], jira.get_issue_uri(issue_key), get_status_color(status))
 
     def process_link(fields, issue_key, link):
         if 'outwardIssue' in link:
