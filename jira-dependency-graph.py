@@ -147,6 +147,9 @@ def build_graph_data(start_issue_key, jira, excludes, show_directions, direction
             linkLabel = link_type
             if link_type == 'is blocked by':
                 linkLabel = 'blocks'
+            elif link_type == 'blocks':
+                linkLabel = 'is blocked by'
+                    
             node = '{}->{}[label="{}"{}]'.format(
                 create_node_text(issue_key, fields),
                 create_node_text(linked_issue_key,
