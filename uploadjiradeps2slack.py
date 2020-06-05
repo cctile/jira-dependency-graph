@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+#
+# Copyright 2020 Tile Inc.  All Rights Reserved.
 
 import os
 import sys
