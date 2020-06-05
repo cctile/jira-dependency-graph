@@ -1,6 +1,10 @@
+# Copyright 2020 Tile Inc.  All Rights Reserved.
+#
+
 SHELL:=/opt/local/bin/bash
 JIRA_TICKET:=TTGE-4966
-SLACK_CHANNEL:=\#ios-tech-debt-2020
+JIRA_URL=https://thetileapp.atlassian.net
+#SLACK_CHANNEL:=\#engineering
 TIMESTAMP:=$(shell /bin/date "+_%Y_%m_%d_%H%M%S%Z.svg")
 TITLE:=${JIRA_TICKET}$(shell /bin/date "+ %Y-%m-%d %H:%M:%S")
 
