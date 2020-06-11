@@ -138,7 +138,16 @@ def build_graph_data(start_issue_key, jira, excludes, show_directions, direction
         arrow = ' => ' if direction == 'outward' else ' <= '
         log(issue_key + arrow + link_type + arrow + linked_issue_key)
 
-        extra = ',color="red"' if link_type == "blocks" else ""
+        #extra = ',color="red"' if link_type in ("is blocked by", "blocks") else ""
+
+        extra = ''
+        if link_type in ("is blocked by", "blocks"):
+            extra = ',color="black"'
+            
+        elif link_type in ("relates to",):
+            extra = ',color="lightgrey", fontcolor="lightgrey", arrowtail="none", arrowhead="none"'
+
+            
 
         if direction not in show_directions:
             node = None
@@ -184,7 +193,7 @@ def build_graph_data(start_issue_key, jira, excludes, show_directions, direction
                 for subtask in issues:
                     subtask_key = get_key(subtask)
                     log(subtask_key + ' => references epic => ' + issue_key)
-                    node = '{}->{}[color=orange]'.format(
+                    node = '{}->{}[color=orange,label="epic",fontcolor=orange]'.format(
                         create_node_text(issue_key, fields),
                         create_node_text(subtask_key, subtask['fields']))
                     graph.append(node)
