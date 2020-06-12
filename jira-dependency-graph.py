@@ -202,7 +202,7 @@ def build_graph_data(start_issue_key, jira, excludes, show_directions, direction
                 for subtask in fields['subtasks']:
                     subtask_key = get_key(subtask)
                     log(issue_key + ' => has subtask => ' + subtask_key)
-                    node = '{}->{}[color=blue][label="subtask"]'.format (
+                    node = '{}->{}[color=dodgerblue][label="subtask", fontcolor=dodgerblue]'.format (
                             create_node_text(issue_key, fields),
                             create_node_text(subtask_key, subtask['fields']))
                     graph.append(node)
