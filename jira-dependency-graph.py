@@ -193,11 +193,17 @@ def build_graph_data(start_issue_key, jira, excludes, show_directions, direction
                 for subtask in issues:
                     subtask_key = get_key(subtask)
                     log(subtask_key + ' => references epic => ' + issue_key)
+
+                    if subtask['fields']['issuetype']['name'] == 'Task':
+                        log('{} {}'.format(subtask_key, 'Task'))
+                        continue
+                    
                     node = '{}->{}[color=orange,label="epic",fontcolor=orange]'.format(
                         create_node_text(issue_key, fields),
                         create_node_text(subtask_key, subtask['fields']))
                     graph.append(node)
                     children.append(subtask_key)
+                    
             if 'subtasks' in fields and not ignore_subtasks:
                 for subtask in fields['subtasks']:
                     subtask_key = get_key(subtask)
